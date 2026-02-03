@@ -13,48 +13,47 @@ public:
         }
         return true;
     }
-    int memo(string &s, int i, int j, vector<vector<int>> &dp) {
-        if(i==j) return 0;
-        if(dp[i][j] != -1) {
-            return dp[i][j];
+    int memo(string &s, int i, vector<int> &dp) {
+        if(i==s.size()) return 0;
+        if(dp[i] != -1) {
+            return dp[i];
         }
         int ans = INT_MAX;
-        for(int k=i;k<j;k++) {
+        for(int k=i;k<s.size()-1;k++) {
             if(isPalimdrome(s,i,k)) {
-                ans = min(ans, 1 + memo(s, k+1, j,dp));
+                ans = min(ans, 1 + memo(s, k+1,dp));
             }
         }
-        return dp[i][j] = ans;
+        return dp[i] = ans;
     }
-    int bruteForce(string &s, int i, int j) {
-        if(i==j) return 0;
+    int bruteForce(string &s, int i) {
+        if(i==s.size()) return 0;
         int ans = INT_MAX;
-        for(int k=i;k<j;k++) {
+        for(int k=i;k<s.size();k++) {
             if(isPalimdrome(s,i,k)) {
-                ans = min(ans, 1 + bruteForce(s, k+1, j));
+                ans = min(ans, 1 + bruteForce(s, k+1));
             }
         }
         return ans;
     }
     int tab(string &s) {
         int n = s.size();
-        vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+        vector<int> dp(n+1,0);
         for(int i=n-1;i>=0;i--) {
-            for(int j=i+1;j<n;j++) {
-                int ans = INT_MAX;
-                for(int k=i;k<j;k++) {
-                    if(isPalimdrome(s,i,k)) {
-                        ans = min(ans, 1 + dp[k+1][j]);
-                    }
+            int ans = INT_MAX;
+            for(int k=i;k<s.size();k++) {
+                if(isPalimdrome(s,i,k)) {
+                    ans = min(ans, 1 + dp[k+1]);
                 }
-                dp[i][j] = ans;
             }
+            dp[i] = ans;
         }
-        return dp[0][n-1];
+        return dp[0]-1;
     }
     int minCut(string s) {
         int n = s.size();
-        vector<vector<int>> dp(n+1, vector<int>(n+1, -1));
+        if(isPalimdrome(s,0,n-1)) return 0;
+        vector<int> dp(n+1, -1);
         return tab(s);
     }
 };
