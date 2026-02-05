@@ -42,11 +42,29 @@ public: // 1 | 15 7 8 2 5 10
         }
         return dp[i] = maxi;
     }
+    int tab(vector<int>& arr, int k) {
+        int n = arr.size();
+        vector<int> dp(n+1,0);
+
+        for(int i=n-1;i>=0;i--) {
+            int maxi = 0;
+
+            int maxValue = 0;
+
+            for(int l=i;l<min(n,i+k);l++) {
+                maxValue = max(maxValue, arr[l]);
+                int len = l - i + 1;
+                maxi = max(maxi,maxValue * len + dp[l+1]);
+            }
+            dp[i] = maxi;
+        }
+        return dp[0];
+    }
 
     int maxSumAfterPartitioning(vector<int>& arr, int k) {
         int n = arr.size();
         vector<int> dp(n+1,-1);
-        return bruteForce(arr,k,0,dp);
+        return tab(arr,k);
     }
 };
 
