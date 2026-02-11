@@ -65,10 +65,10 @@ public:
                 for(int l=0;l<=k;l++) {
                     long long ans = LLONG_MIN;
                     if(i < n)
-                        dp[i+1][j][l] = max(dp[i+1][j][t], dp[i][j][t]);
+                        dp[i+1][j][l] = max(dp[i+1][j][l], dp[i][j][l]);
 
                     if(j < m)
-                        dp[i][j+1][l] = max(dp[i][j+1][t], dp[i][j][t]);
+                        dp[i][j+1][l] = max(dp[i][j+1][l], dp[i][j][l]);
 
                     long long nxt = dp[i+1][j+1][l-1];
 
