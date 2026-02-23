@@ -23,22 +23,45 @@ class Trie {
                 if(!tmp->arr[c-'a']) {
                     tmp->arr[c-'a'] = new Node();
                 }
-                tmp->startCount++;
                 tmp = tmp->arr[c-'a'];
+                tmp->startCount++;
             }
             tmp->equalCount++;
     	}
 
 	    int countWordsEqualTo(string word) {
 	        Node* tmp = root;
+            for(char &c: word) {
+                if(!tmp->arr[c-'a']) {
+                    return 0;
+                }
+                tmp = tmp->arr[c-'a'];
+            }
+            return tmp->equalCount;
     	}
 
 	    int countWordsStartingWith(string word) {
-	        
+	        Node* tmp = root;
+            for(char &c: word) {
+                if(!tmp->arr[c-'a']) {
+                    return 0;
+                }
+                tmp = tmp->arr[c-'a'];
+            }
+            return tmp->startCount;
     	}
 
 	    void erase(string word) {
-	        
+	        Node* tmp = root;
+            for(char &c: word) {
+                if(!tmp->arr[c-'a']) {
+                    return;
+                }
+                
+                tmp = tmp->arr[c-'a'];
+                tmp->startCount--;
+            }
+            tmp->equalCount--;
 	    }
 };
 
