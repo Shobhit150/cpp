@@ -30,10 +30,10 @@ public:
 	}
 };
 
+
 class Solution{	
 	public:
 		int bruteForce(string s) {
-
 			unordered_set<string> st;
 			st.insert("");	
 			
