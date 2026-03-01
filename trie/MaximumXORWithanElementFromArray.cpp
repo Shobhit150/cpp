@@ -50,26 +50,29 @@ public:
     vector<int> maximizeXor(vector<int>& nums, vector<vector<int>>& queries) {
         
         sort(nums.begin(), nums.end());
-        sort(queries.begin(), queries.end(),
-            [](vector<int> &a, vector<int>&b) {
-                return a[1] < b[1];
-            }
-        );
+        int q = queries.size();
+        vector<tuple<int,int,int>> qs;
+        for (int i = 0; i < q; i++) {
+            qs.push_back({queries[i][1], queries[i][0], i});
+        }
+
+        sort(qs.begin(), qs.end());
 
         Trie t;
         
-        vector<int> res;
+        vector<int> res(queries.size());
         int j = 0;
-        for(int i=0;i<queries.size();i++) {
-            int x = queries[i][0];
-            int m = queries[i][1];
+        for(auto &[m, x, idx] : qs) {
             while(j < nums.size() && nums[j] <= m) {
                 t.insert(nums[j]);
                 j++;
             }
             
-            if (j > 0)
-                res.push_back(t.search(x));
+            if (j > 0) {
+                res[idx]=t.search(x);
+            } else {
+                res[idx]=-1;
+            }
         }
         return res;
     }
