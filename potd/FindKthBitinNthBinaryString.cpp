@@ -4,12 +4,6 @@
 using namespace std;
 #define ll long long
 
-#include<iostream>
-#include<string>
-#include<vector>
-using namespace std;
-#define ll long long
-
 class Solution {
 public:
     void invert(string &s) {
